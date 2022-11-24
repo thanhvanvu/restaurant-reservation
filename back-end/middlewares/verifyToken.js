@@ -6,8 +6,7 @@ exports.verifyToken = (req, res, next) => {
 
   if (!Authorization) {
     // allow none user to create a reservation
-    const userId = false
-    req.user = userId
+    req.user = null
     next()
   } else {
     // If user is login --> Get Token

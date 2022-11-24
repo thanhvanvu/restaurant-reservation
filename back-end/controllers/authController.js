@@ -48,3 +48,49 @@ exports.login = async (req, res, next) => {
     }
   } catch (error) {}
 }
+
+// Get Current User
+exports.getCurrentUser = async (req, res, next) => {
+  try {
+    // set initial user = null
+    const data = { user: null }
+    if (req.user) {
+      // user: { userId: '6322fd1c2844c13387749512' }
+      const user = await User.findOne({ _id: req.user.userId })
+      data.user = {
+        userId: user._id,
+        userName: user.name,
+        mailing_address: user.mailing_address,
+      }
+    }
+
+    // response back to client if successfully get current user
+    res.status(200).json({
+      status: 'Success',
+      data: data,
+    })
+  } catch (error) {
+    res.json(error)
+  }
+}
+
+// Update Current User
+exports.updateCurrentUser = async (req, res, next) => {
+  try {
+    // Params is the id in the https address
+    // https/abc.com/61547835151 ==> params = 61547835151
+    const { userId } = req.params
+    const userProfile = await User.findOneAndUpdate(
+      userId,
+      { ...req.body },
+      { new: true, runValidator: true }
+    )
+
+    res.status(200).json({
+      status: 'success',
+      data: { userProfile },
+    })
+  } catch (error) {
+    res.json(error)
+  }
+}

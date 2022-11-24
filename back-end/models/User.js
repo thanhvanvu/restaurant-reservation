@@ -21,6 +21,29 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Password must be required'],
       minLength: [6, 'Password must be at least 6 characters'],
     },
+
+    mailing_address: {
+      address: {
+        type: String,
+        trim: true,
+        default: '',
+      },
+      city: {
+        type: String,
+        trim: true,
+        default: '',
+      },
+      state: {
+        type: String,
+        trim: true,
+        default: '',
+      },
+      zipcode: {
+        type: String,
+        trim: true,
+        default: '',
+      },
+    },
   },
   { timestamps: true }
 )
