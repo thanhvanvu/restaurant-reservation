@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
       require: [true, 'Name must be required'],
     },
 
@@ -22,12 +21,6 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Password must be required'],
       minLength: [6, 'Password must be at least 6 characters'],
     },
-
-    // randomGeneratedString: {
-    //   type: String,
-    //   minLength: 5,
-    //   maxlength: 5,
-    // },
   },
   { timestamps: true }
 )
@@ -44,16 +37,6 @@ userSchema.pre('save', function (next) {
     }
   })
 })
-
-// userSchema.pre('save', async function (next) {
-//   const randomInteger = (min, max) => {
-//     return Math.floor(Math.random() * (max - min + 1)) + min
-//   }
-//   this.randomGeneratedString = Math.random()
-//     .toString(36)
-//     .substr(2, randomInteger(1, 9))
-//   next()
-// })
 
 const User = mongoose.model('User', userSchema)
 

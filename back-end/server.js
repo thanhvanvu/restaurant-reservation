@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const authRoute = require('./routes/authRoute')
+const reservationRoute = require('./routes/reservationRoute')
 
 //config dotenv
 require('dotenv').config()
@@ -16,22 +17,9 @@ const bootServer = () => {
 
   const port = process.env.APP_PORT
 
-  // app.get('/', (req, res, next) => {
-  //   res.status(200).json({
-  //     status: 'Success',
-  //     data: {
-  //       reservations: [
-  //         {
-  //           content: 'Hello World',
-  //           date: '9/3/2022',
-  //         },
-  //       ],
-  //     },
-  //   })
-  // })
-
   // Mount the route
   app.use('/api/v1/auth', authRoute)
+  app.use('/api/v1/reservations', reservationRoute)
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
