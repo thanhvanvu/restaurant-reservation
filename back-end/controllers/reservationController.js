@@ -24,7 +24,6 @@ exports.createOneReservation = async (req, res, next) => {
     //req.user is from verifyToken
     const { userId } = req.user
 
-    console.log({ userId })
     const reservation = await Reservation.create({
       ...req.body,
       customer: userId,

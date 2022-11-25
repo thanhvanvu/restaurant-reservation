@@ -19,7 +19,7 @@ exports.register = async (req, res, next) => {
       data: { token, user, userName: user.name },
     })
   } catch (error) {
-    res.json(error)
+    next(error)
   }
 }
 
@@ -30,6 +30,9 @@ exports.login = async (req, res, next) => {
 
     if (!user) {
       //Error: Email is not correct
+      const err = new Error('Email is not correct!')
+      err.statusCode = 400
+      return next(err) //exit code when meeting the error
     }
 
     // compare 2 password
@@ -45,8 +48,13 @@ exports.login = async (req, res, next) => {
       })
     } else {
       //Error: Password is not correct
+      const err = new Error('Password is not correct!')
+      err.statusCode = 400
+      return next(err) //exit code when meeting the error
     }
-  } catch (error) {}
+  } catch (error) {
+    res.json(error)
+  }
 }
 
 // Get Current User
@@ -80,7 +88,8 @@ exports.updateCurrentUser = async (req, res, next) => {
     // Params is the id in the https address
     // https/abc.com/61547835151 ==> params = 61547835151
     const { userId } = req.params
-    const userProfile = await User.findOneAndUpdate(
+    console.log({ userId })
+    const userProfile = await User.findByIdAndUpdate(
       userId,
       { ...req.body },
       { new: true, runValidator: true }
@@ -91,6 +100,6 @@ exports.updateCurrentUser = async (req, res, next) => {
       data: { userProfile },
     })
   } catch (error) {
-    res.json(error)
+    next(error)
   }
 }
