@@ -1,0 +1,89 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* define a font */
+@font-face {
+  font-family: menuFont;
+  src: url('myriad-pro/MYRIADPRO-REGULAR.woff');
+}
+
+@font-face {
+  font-family: getAQuote;
+  src: url('myriad-pro/MYRIADPRO-BOLD.woff');
+}
+
+@font-face {
+  font-family: overpas-extraBold;
+  src: url('Overpass/Overpass-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: poppins-regular;
+  src: url('Poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+  font-family: poppins-medium;
+  src: url('Poppins/Poppins-Medium.ttf');
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.container {
+  max-width: 1170px;
+  margin: 0px auto;
+}
+
+.inline * {
+  display: inline;
+}
+
+.has-two-col {
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-route {
+  font-size: 50px;
+  font-family: poppins-medium;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.fade-in {
+  transition: opacity 1s ease;
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+ul.inline-list li {
+  display: inline;
+}
+
+body {
+  width: 1920px;
+}
+
+#top {
+  background: #ece7f3 url('../public/image/background1/background1.png')
+    no-repeat center top;
+  background-size: cover;
+  padding-top: 48px;
+  height: 1080px;
+}

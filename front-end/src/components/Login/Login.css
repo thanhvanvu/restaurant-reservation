@@ -1,0 +1,144 @@
+#hero {
+  margin-top: 140px;
+}
+
+#login {
+  width: 600px;
+}
+
+#login-form {
+  border: 2px solid #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0px 27px 43px rgb(32, 94, 171, 0.4);
+}
+
+#login-form #form-name h2 {
+  font-family: overpas-extraBold;
+  font-size: 20px;
+  line-height: 24px;
+  border: 1px solid #c04ae2;
+  color: white;
+  padding-top: 23px;
+  padding-bottom: 23px;
+  padding-left: 22px;
+  background-color: #c04ae2;
+  border-radius: 5px 5px 0px 0px;
+}
+
+#login-form #id-password-submit {
+  background-color: #f2f2f2;
+  padding-bottom: 35px;
+}
+
+#login-form #id-password-submit #error-massage {
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  color: red;
+  text-align: center;
+}
+
+#login-form #id-password-submit div {
+  padding-top: 25px;
+}
+
+#login-form #id-password-submit input {
+  display: block;
+  margin: 0 auto;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #999999;
+  background-color: #f0eef0;
+  width: 500px;
+  outline: none;
+}
+
+#login-form #id-password-submit #password {
+  position: relative;
+}
+
+#show-password {
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  color: #999999;
+  display: inline-block;
+  position: absolute;
+  right: 55px;
+  top: 30px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#show-password:hover {
+  color: #535050;
+  background-color: #999999;
+}
+
+#login-form #id-password-submit #signin button {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  border: 1px solid #c04ae2;
+  background-color: #c04ae2;
+  color: white;
+  border-radius: 5px;
+  padding: 11px 220px;
+  margin-left: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#login-form #id-password-submit #signin button:hover {
+  background-color: #a425c8;
+  transform: translateY(3px);
+}
+
+#login-form #id-password-submit #signin a {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  color: #999999;
+  margin-left: 50px;
+}
+
+#login-form #id-password-submit #signup {
+  text-align: center;
+}
+
+#login-form #id-password-submit #signup p {
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+#login-form #id-password-submit #signup a {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  margin-top: 20px;
+  border-bottom: 1px solid #c04ae2;
+}
+
+#hero-right {
+  position: relative;
+  flex-grow: 1;
+}
+
+#hero-right img {
+  position: absolute;
+  top: 0;
+  left: 50px;
+}

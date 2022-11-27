@@ -1,0 +1,98 @@
+footer {
+  background: #f4efec url('../../../public/image/footer/footer.png') no-repeat
+    center top;
+  padding-bottom: 60px;
+  padding-top: 170px;
+}
+
+footer #footer-wraper {
+  display: flex;
+  justify-content: space-between;
+}
+
+footer #footer-wraper #subcribe {
+  width: 400px;
+}
+
+footer #footer-wraper #subcribe p {
+  margin-top: 40px;
+  font-family: poppins-regular;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+footer #about h2 {
+  font-family: overpas-extraBold;
+  font-size: 24px;
+  line-height: 26px;
+  margin-bottom: 35px;
+}
+
+footer #about ul li p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 30px;
+  color: #5e5858;
+  margin-bottom: 17px;
+}
+
+footer #service h2 {
+  font-family: overpas-extraBold;
+  font-size: 24px;
+  line-height: 26px;
+  margin-bottom: 35px;
+}
+
+footer #service ul li p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 30px;
+  color: #5e5858;
+  margin-bottom: 17px;
+}
+
+footer #get-in-touch h2 {
+  font-family: overpas-extraBold;
+  font-size: 24px;
+  line-height: 26px;
+  margin-bottom: 35px;
+}
+
+footer #get-in-touch ul li img {
+  margin-right: 22px;
+}
+
+footer #get-in-touch ul li p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 30px;
+  color: #5e5858;
+  margin-bottom: 17px;
+}
+
+footer #get-in-touch ul li:first-child p #content1::after {
+  content: '\a';
+  white-space: pre;
+}
+
+footer #get-in-touch ul li:first-child p #content2 {
+  margin-left: 35px;
+}
+
+footer #follow-us {
+  margin-top: 140px;
+}
+
+footer #follow-us h2 {
+  font-family: overpas-extraBold;
+  font-size: 18px;
+  line-height: 26px;
+  margin-right: 65px;
+}
+
+footer #follow-us ul li {
+  margin-right: 15px;
+}

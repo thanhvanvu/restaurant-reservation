@@ -1,0 +1,310 @@
+#hero {
+  margin-top: 125px;
+}
+
+.profile-form {
+  border: 2px solid #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0px 27px 43px rgb(32, 94, 171, 0.4);
+}
+
+.profile-form #form-name h2 {
+  text-align: center;
+  font-family: overpas-extraBold;
+  font-size: 20px;
+  line-height: 24px;
+  border: 1px solid #c04ae2;
+  color: white;
+  padding-top: 23px;
+  padding-bottom: 23px;
+  padding-left: 22px;
+  background-color: #c04ae2;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.profile-form #information {
+  background-color: #f2f2f2;
+  padding: 20px 20px 20px 20px;
+}
+
+.profile-form #information div {
+  margin-top: 15px;
+}
+
+.profile-form #information div > input {
+  margin-top: 10px;
+}
+
+.profile-form #information #name label {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.profile-form #information #name input {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #information #address1 label {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.profile-form #information #address1 input {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #information #address2 label {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.profile-form #information #address2 input {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #city-state-zip {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-form #city-state-zip > div {
+  margin: 0px;
+}
+
+.profile-form #city-state-zip div label {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.profile-form #city-state-zip div input {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #city-state-zip #state select {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #city-state-zip div:first-child {
+  width: 55%;
+}
+
+.profile-form #city-state-zip div:nth-child(2) {
+  width: 15%;
+}
+
+.profile-form #city-state-zip div:nth-child(3) {
+  width: 20%;
+}
+
+.profile-form #profile-submit {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.profile-form #profile-submit button {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  border: 1px solid #c04ae2;
+  background-color: #c04ae2;
+  color: white;
+  border-radius: 5px;
+  padding: 11px 26px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.profile-form #profile-submit button:hover {
+  background-color: #a425c8;
+  transform: translateY(3px);
+}
+
+.profile-form #profile-submit a {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  color: #494848;
+}
+
+/* style user information */
+.profile-form #information div > p {
+  margin-top: 10px;
+  height: 44px;
+}
+
+.profile-form #information #name p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #information #address1 p {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #information #address2 p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #city-state-zip div p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #city-state-zip #state p {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form #profile-edit {
+  text-align: center;
+}
+
+.profile-form #profile-edit span {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  border: 1px solid #c04ae2;
+  background-color: #c04ae2;
+  color: white;
+  border-radius: 5px;
+  padding: 11px 26px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.profile-form #profile-edit span:hover {
+  background-color: #a425c8;
+  transform: translateY(3px);
+}
