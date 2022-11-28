@@ -32,7 +32,6 @@ export default function Login() {
       }
 
       const response = await axios(options)
-      console.log(response)
 
       // get TOKEN, userName
       const { token, userName, user } = response.data.data

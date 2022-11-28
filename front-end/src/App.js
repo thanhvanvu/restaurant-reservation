@@ -9,12 +9,42 @@ import UserProfile from './components/UserProfile/UserProfile'
 import Reservation from './components/Reservation/Reservation'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AppReducer from './reducers/AppReducer'
-import { useReducer } from 'react'
+import { useCallback, useEffect, useReducer } from 'react'
 import AppContext from './components/AppContext'
+import axios from 'axios'
 
 function App() {
   const initialState = { user: null, reservations: [] }
   const [state, dispatch] = useReducer(AppReducer, initialState)
+
+  const checkCurrentUser = useCallback(async () => {
+    try {
+      // get token from localStorage
+      const token = localStorage.getItem('token')
+      const option = {
+        method: 'get',
+        url: '/api/v1/auth',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+
+      const response = await axios(option)
+      // console.log(response)
+
+      if (response.data.data.user) {
+        const user = response.data.data.user
+        dispatch({ type: 'CURRENT_USER', payload: user })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('abc')
+    checkCurrentUser()
+  }, [checkCurrentUser])
   return (
     <BrowserRouter>
       <AppContext.Provider value={{ state, dispatch }}>
