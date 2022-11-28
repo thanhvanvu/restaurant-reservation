@@ -12,25 +12,25 @@ const reservationSchema = new mongoose.Schema(
       // required: [true, 'Email must be required'],
     },
 
-    // phone_number: {
-    //   type: String,
-    //   trim: true,
-    // },
+    phone_number: {
+      type: String,
+      trim: true,
+    },
 
-    // date: {
-    //   type: Date,
-    //   trim: true,
-    // },
+    date: {
+      type: String,
+      trim: true,
+    },
 
-    // time: {
-    //   type: String,
-    //   trim: true,
-    // },
+    time: {
+      type: String,
+      trim: true,
+    },
 
-    // total_guest: {
-    //   type: Number,
-    //   trim: true,
-    // },
+    total_guest: {
+      type: Number,
+      trim: true,
+    },
 
     // special_request: {
     //   type: String,

@@ -30,7 +30,6 @@ function App() {
       }
 
       const response = await axios(option)
-      // console.log(response)
 
       if (response.data.data.user) {
         const user = response.data.data.user
@@ -42,7 +41,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log('abc')
     checkCurrentUser()
   }, [checkCurrentUser])
   return (

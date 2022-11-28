@@ -22,18 +22,31 @@ exports.getAllReservations = async (req, res, next) => {
 exports.createOneReservation = async (req, res, next) => {
   try {
     //req.user is from verifyToken
-    const { userId } = req.user
+    if (req.user) {
+      const { userId } = req.user
+      const reservation = await Reservation.create({
+        ...req.body,
+        customer: userId,
+      })
 
-    const reservation = await Reservation.create({
-      ...req.body,
-      customer: userId,
-    })
+      // response back to client if successfully connect to DB
+      res.status(200).json({
+        status: 'Success',
+        data: { reservation },
+      })
+    } else {
+      const { userId } = req.user
+      const reservation = await Reservation.create({
+        ...req.body,
+        customer: null,
+      })
 
-    // response back to client if successfully connect to DB
-    res.status(200).json({
-      status: 'Success',
-      data: { reservation },
-    })
+      // response back to client if successfully connect to DB
+      res.status(200).json({
+        status: 'Success',
+        data: { reservation },
+      })
+    }
   } catch (error) {
     res.json(error)
   }

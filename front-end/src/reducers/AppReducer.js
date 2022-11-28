@@ -5,6 +5,12 @@ export default function reducer(state, action) {
         ...state,
         user: action.payload,
       }
+
+    case 'GET_ALL_RESERVATIONS':
+      return {
+        ...state,
+        reservations: action.payload,
+      }
     default:
       return state
   }
