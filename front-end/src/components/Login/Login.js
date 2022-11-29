@@ -33,14 +33,18 @@ export default function Login() {
 
       const response = await axios(options)
 
+      console.log(response)
       // get TOKEN, userName
-      const { token, userName, user } = response.data.data
+      const { token, userName, userId, mailing_address } = response.data.data
 
       // save TOKEN in localstorage
       localStorage.setItem('token', token)
 
       // Use DISPATCH to update the initial state
-      dispatch({ type: 'CURRENT_USER', payload: { userName, user } })
+      dispatch({
+        type: 'CURRENT_USER',
+        payload: { userName, userId, mailing_address },
+      })
 
       // Navigate to homepage after login
       navigate('/')

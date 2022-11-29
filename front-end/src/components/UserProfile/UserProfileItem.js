@@ -1,7 +1,43 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import axios from 'axios'
+import AppContext from '../AppContext'
 
-export default function UserProfileItem() {
+export default function UserProfileItem({ user }) {
+  const { dispatch } = useContext(AppContext)
   const [openEditForm, setOpenEditForm] = useState(false)
+  const userAddress = user.mailing_address
+
+  const [userProfileInput, setUserProfileInput] = useState({
+    name: user.userName,
+    mailing_address: {
+      address: userAddress.address,
+      city: userAddress.city,
+      state: userAddress.state,
+      zipcode: userAddress.zipcode,
+    },
+  })
+
+  // function to update userProfile
+  const updateCurrentUser = async (e) => {
+    try {
+      const option = {
+        method: 'put',
+        url: `/api/v1/auth/userProfile/${user.userId}`,
+        data: userProfileInput,
+      }
+
+      // send request to server
+      await axios(option)
+
+      // Update the USER state
+      dispatch({
+        type: 'UPDATE_CURRENT_USER',
+        payload: { ...userProfileInput },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div id="profile-wrap">
       {openEditForm === false && (
@@ -17,28 +53,28 @@ export default function UserProfileItem() {
                   <div id="name">
                     <label>Full Name</label>
 
-                    <p>Thanh</p>
+                    <p>{user.userName}</p>
                   </div>
 
                   <div id="address1">
-                    <label>Address 1</label>
-                    <p>address</p>
+                    <label>Address</label>
+                    <p>{userAddress.address}</p>
                   </div>
 
                   <div id="city-state-zip">
                     <div id="city">
                       <label>City</label>
-                      <p>city</p>
+                      <p>{userAddress.city}</p>
                     </div>
 
                     <div id="state">
                       <label>State</label>
-                      <p>state</p>
+                      <p>{userAddress.state}</p>
                     </div>
 
                     <div id="zipcode">
                       <label>Zip code</label>
-                      <p>77075</p>
+                      <p>{userAddress.zipcode}</p>
                     </div>
                   </div>
                 </div>
@@ -56,7 +92,7 @@ export default function UserProfileItem() {
       {openEditForm && (
         <>
           <div id="profile-edit " className="fade-in">
-            <form className="profile-form">
+            <form className="profile-form" onSubmit={updateCurrentUser}>
               <div id="form-name">
                 <h2>Update Information</h2>
               </div>
@@ -71,17 +107,34 @@ export default function UserProfileItem() {
                       id="name"
                       name="name"
                       placeholder="Enter Name"
+                      value={userProfileInput.name}
+                      onChange={(e) => {
+                        setUserProfileInput({
+                          ...userProfileInput,
+                          [e.target.name]: e.target.value,
+                        })
+                      }}
                       required
                     />
                   </div>
 
                   <div id="address1">
-                    <label>Address 1</label>
+                    <label>Address</label>
                     <input
                       type="text"
-                      id="address1"
-                      name="address1"
-                      placeholder="Enter Address 1"
+                      id="address"
+                      name="address"
+                      placeholder="Enter Address"
+                      value={userProfileInput.mailing_address.address}
+                      onChange={(e) => {
+                        setUserProfileInput({
+                          ...userProfileInput,
+                          mailing_address: {
+                            ...userProfileInput.mailing_address,
+                            [e.target.name]: e.target.value,
+                          },
+                        })
+                      }}
                       required
                     />
                   </div>
@@ -94,13 +147,37 @@ export default function UserProfileItem() {
                         id="city"
                         name="city"
                         placeholder="Enter City"
+                        value={userProfileInput.mailing_address.city}
+                        onChange={(e) => {
+                          setUserProfileInput({
+                            ...userProfileInput,
+                            mailing_address: {
+                              ...userProfileInput.mailing_address,
+                              [e.target.name]: e.target.value,
+                            },
+                          })
+                        }}
                         required
                       />
                     </div>
 
                     <div id="state">
                       <label>State</label>
-                      <select id="state" name="state">
+                      <select
+                        id="state"
+                        name="state"
+                        value={userProfileInput.mailing_address.state}
+                        onChange={(e) => {
+                          setUserProfileInput({
+                            ...userProfileInput,
+                            mailing_address: {
+                              ...userProfileInput.mailing_address,
+                              [e.target.name]: e.target.value,
+                            },
+                          })
+                        }}
+                        required
+                      >
                         <option selected>Choose...</option>
                         <option>AA</option>
                         <option>AE</option>
@@ -115,7 +192,46 @@ export default function UserProfileItem() {
                         <option>DC</option>
                         <option>DE</option>
                         <option>FL</option>
-                        <option>GA</option>
+                        <option>HI</option>
+                        <option>ID</option>
+                        <option>IL</option>
+                        <option>IN</option>
+                        <option>IA</option>
+                        <option>KS</option>
+                        <option>KY</option>
+                        <option>LA</option>
+                        <option>ME</option>
+                        <option>MD</option>
+                        <option>MA</option>
+                        <option>MI</option>
+                        <option>MN</option>
+                        <option>MS</option>
+                        <option>MO</option>
+                        <option>MT</option>
+                        <option>NE</option>
+                        <option>NV</option>
+                        <option>NH</option>
+                        <option>NJ</option>
+                        <option>NM</option>
+                        <option>NY</option>
+                        <option>NC</option>
+                        <option>ND</option>
+                        <option>OH</option>
+                        <option>OK</option>
+                        <option>OR</option>
+                        <option>PA</option>
+                        <option>RI</option>
+                        <option>SC</option>
+                        <option>SD</option>
+                        <option>TN</option>
+                        <option>TX</option>
+                        <option>UT</option>
+                        <option>VT</option>
+                        <option>VA</option>
+                        <option>WA</option>
+                        <option>WV</option>
+                        <option>WI</option>
+                        <option>WY</option>
                       </select>
                     </div>
 
@@ -128,6 +244,16 @@ export default function UserProfileItem() {
                         placeholder="Enter Zip code"
                         minLength="5"
                         maxLength="5"
+                        value={userProfileInput.mailing_address.zipcode}
+                        onChange={(e) => {
+                          setUserProfileInput({
+                            ...userProfileInput,
+                            mailing_address: {
+                              ...userProfileInput.mailing_address,
+                              [e.target.name]: e.target.value,
+                            },
+                          })
+                        }}
                         required
                       />
                     </div>

@@ -6,6 +6,12 @@ export default function reducer(state, action) {
         user: action.payload,
       }
 
+    case 'UPDATE_CURRENT_USER':
+      return {
+        ...state,
+        user: action.payload,
+      }
+
     case 'GET_ALL_RESERVATIONS':
       return {
         ...state,

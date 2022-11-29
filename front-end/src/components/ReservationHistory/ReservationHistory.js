@@ -8,8 +8,6 @@ export default function ReservationHistory() {
   // useContext: to get the STATE, DISPATCH from AppContext
   const { state, dispatch } = useContext(AppContext)
   const { reservations, user } = state
-  // console.log(user)
-  // console.log(reservations)
 
   // function to get all reservations
   const getAllReservations = useCallback(async () => {

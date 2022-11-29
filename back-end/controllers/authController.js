@@ -16,13 +16,19 @@ exports.register = async (req, res, next) => {
     // response back to client if successfully creating the user
     res.status(200).json({
       status: 'Success',
-      data: { token, user, userName: user.name },
+      data: {
+        token,
+        userId: user._id,
+        userName: user.name,
+        mailing_address: user.mailing_address,
+      },
     })
   } catch (error) {
     next(error)
   }
 }
 
+// Login
 exports.login = async (req, res, next) => {
   try {
     // find user in DB with real email from user input (req.body.email)
@@ -44,7 +50,12 @@ exports.login = async (req, res, next) => {
       // response back to client if successfully creating the user
       res.status(200).json({
         status: 'Success',
-        data: { token, user, userName: user.name },
+        data: {
+          token,
+          userId: user._id,
+          userName: user.name,
+          mailing_address: user.mailing_address,
+        },
       })
     } else {
       //Error: Password is not correct
@@ -88,7 +99,8 @@ exports.updateCurrentUser = async (req, res, next) => {
     // Params is the id in the https address
     // https/abc.com/61547835151 ==> params = 61547835151
     const { userId } = req.params
-    console.log({ userId })
+    // console.log({ userId })
+
     const userProfile = await User.findByIdAndUpdate(
       userId,
       { ...req.body },
