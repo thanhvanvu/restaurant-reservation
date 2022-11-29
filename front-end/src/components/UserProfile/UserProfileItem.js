@@ -178,7 +178,9 @@ export default function UserProfileItem({ user }) {
                         }}
                         required
                       >
-                        <option selected>Choose...</option>
+                        <option selected disabled value="">
+                          Choose...
+                        </option>
                         <option>AA</option>
                         <option>AE</option>
                         <option>AK</option>
@@ -260,7 +262,7 @@ export default function UserProfileItem({ user }) {
                   </div>
                 </div>
 
-                <div id="profile-submit">
+                <div id="profile-submit" className="cancel-submit">
                   <button type="submit">Update</button>
                   <button onClick={() => setOpenEditForm(false)} type="button">
                     Cancel

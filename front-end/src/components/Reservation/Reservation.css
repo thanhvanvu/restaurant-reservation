@@ -27,7 +27,7 @@
   padding: 20px 20px 20px 20px;
 }
 
-#reservation-form #information div {
+#reservation-form #information > div:not(#guest-information) {
   margin-top: 15px;
 }
 
@@ -39,6 +39,30 @@
   margin-top: 10px;
 }
 
+#reservation-form #information #date-time-card {
+  margin-top: 0px;
+}
+
+#card-information {
+  padding: 0px 0px 15px 0px;
+  border-top: 1px solid rgb(200, 193, 193);
+  border-bottom: 1px solid rgb(200, 193, 193);
+}
+
+#card-information p {
+  font-size: 18px;
+  line-height: 26px;
+  margin-top: 10px;
+  font-family: poppins-medium;
+}
+
+#card-information div {
+  margin-top: 10px;
+}
+
+#guest-information div {
+  margin-top: 10px;
+}
 #reservation-form #information #full-name label {
   display: block;
   font-family: poppins-medium;
@@ -108,24 +132,40 @@
   outline: none;
   width: 100%;
 }
+#reservation-form #information #time select {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+  margin-top: 15px;
+}
 
-#reservation-form #time-total-guest {
+.two-rows {
   display: flex;
   justify-content: space-between;
 }
 
-#reservation-form #time-total-guest > div {
+.two-rows > div {
   margin: 0px;
 }
 
-#reservation-form #time-total-guest div label {
+.two-rows div label {
   display: block;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
 }
 
-#reservation-form #time-total-guest div input {
+.two-rows div input {
   display: inline-block;
   font-family: poppins-medium;
   font-size: 18px;
@@ -141,42 +181,17 @@
   width: 100%;
 }
 
-#reservation-form #time-total-guest div:first-child {
+.two-rows div:first-child {
   width: 47%;
 }
 
-#reservation-form #time-total-guest div:nth-child(2) {
+.two-rows div:nth-child(2) {
   width: 47%;
 }
 
-#reservation-form #information #reservation-submit {
-  margin-top: 25px;
-}
-
-#reservation-form #information #reservation-submit button {
-  display: inline-block;
+#greeting {
   font-family: poppins-medium;
-  font-size: 18px;
-  line-height: 26px;
-  border: 1px solid #c04ae2;
-  background-color: #c04ae2;
-  color: white;
-  border-radius: 5px;
-  padding: 11px 26px;
-  cursor: pointer;
-  width: 100%;
-  transition: all 0.3s;
-}
-
-#reservation-form #information #reservation-submit button:hover {
-  background-color: #a425c8;
-  transform: translateY(3px);
-}
-
-#reservation-form #information #reservation-submit a {
-  display: inline-block;
-  font-family: poppins-medium;
-  font-size: 18px;
-  line-height: 26px;
-  color: #494848;
+  text-align: center;
+  font-size: 80px;
+  color: #c04ae2;
 }

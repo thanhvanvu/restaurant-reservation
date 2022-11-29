@@ -165,39 +165,6 @@
   width: 20%;
 }
 
-.profile-form #profile-submit {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.profile-form #profile-submit button {
-  display: inline-block;
-  font-family: poppins-medium;
-  font-size: 18px;
-  line-height: 26px;
-  border: 1px solid #c04ae2;
-  background-color: #c04ae2;
-  color: white;
-  border-radius: 5px;
-  padding: 11px 26px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.profile-form #profile-submit button:hover {
-  background-color: #a425c8;
-  transform: translateY(3px);
-}
-
-.profile-form #profile-submit a {
-  display: inline-block;
-  font-family: poppins-medium;
-  font-size: 18px;
-  line-height: 26px;
-  color: #494848;
-}
-
 /* style user information */
 .profile-form #information div > p {
   margin-top: 10px;

@@ -17,6 +17,15 @@ export default function reducer(state, action) {
         ...state,
         reservations: action.payload,
       }
+
+    // when create one reservation
+    // dispatch will update an array with existed reservations and NEW reservation
+    case 'CREATE_ONE_RESERVATION':
+      return {
+        ...state,
+        reservations: [...state.reservations, action.payload],
+      }
+
     default:
       return state
   }
