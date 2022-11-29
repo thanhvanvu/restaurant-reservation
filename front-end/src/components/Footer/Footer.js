@@ -21,10 +21,10 @@ export default function Footer() {
           <h2>About</h2>
           <ul>
             <li>
-              <p>Abou Us</p>
+              <p>About Us</p>
             </li>
             <li>
-              <p>Service</p>
+              <p>Services</p>
             </li>
             <li>
               <p>Our Story</p>
@@ -45,7 +45,7 @@ export default function Footer() {
               <p>Development</p>
             </li>
             <li>
-              <p>Maintanance</p>
+              <p>Maintenance</p>
             </li>
             <li>
               <p>Consultancy</p>
