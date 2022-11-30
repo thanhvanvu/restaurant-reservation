@@ -1,7 +1,3 @@
-#hero {
-  margin-top: 125px;
-}
-
 #reservation-form {
   border: 2px solid #f2f2f2;
   border-radius: 5px;
@@ -242,4 +238,97 @@
 #total-booked {
   font-family: poppins-medium;
   margin-top: 15px;
+}
+
+#card-information {
+  padding: 0px 0px 15px 0px;
+  border-top: 1px solid rgb(200, 193, 193);
+  border-bottom: 1px solid rgb(200, 193, 193);
+  margin-top: 15px;
+}
+
+#card-information p {
+  font-size: 18px;
+  line-height: 26px;
+  margin-top: 10px;
+  font-family: poppins-medium;
+}
+
+#card-information div {
+  margin-top: 10px;
+}
+
+#card-information #warning {
+  text-align: center;
+}
+
+#card-information #warning p {
+  width: 100%;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 5px 10px;
+  background-color: #dddede;
+  font-family: poppins-regular;
+}
+
+#card-information #billing-address label {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+#card-information #billing-address input {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 70%;
+}
+
+#time {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#time button {
+  display: inline-block;
+  width: 90px;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 40px;
+  background-color: #2d973f;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
+
+#time button:hover {
+  background-color: #1e6329;
+}
+
+#time button:focu {
+  background-color: #c04ae2;
+}
+
+#large-party-warning {
+  font-family: poppins-regular;
+  font-size: 15px;
+  line-height: 20px;
+  background-color: #f19797;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 0px;
 }

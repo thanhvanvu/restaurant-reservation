@@ -1,20 +1,27 @@
 import './Reservation.css'
+import InputMask from 'react-input-mask'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import AppContext from '../AppContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowTrendUp } from '@fortawesome/free-solid-svg-icons'
-import { reservationCapacity } from '../../actions/reservationCapacity'
+import {
+  faArrowTrendUp,
+  faUnlockKeyhole,
+  faCircleExclamation,
+} from '@fortawesome/free-solid-svg-icons'
+import { reservationCapacity, holiday } from '../../actions/initalData'
 import 'font-awesome/css/font-awesome.min.css'
 
 export default function ReservationItem() {
   const { state, dispatch } = useContext(AppContext)
   const { user, reservations } = state
-  const [cardInformation, setCardInformation] = useState(false)
+  const [cardInformation, setCardInformation] = useState({
+    isHoliday: false,
+    holidayName: '',
+    gretting: '',
+  })
   const [guestInformation, setGuestInformation] = useState(false)
-  const [dateTimeCard, setDateTimeCard] = useState(true)
   const [greeting, setGreeting] = useState(false)
-  const [timeAvailability] = useState(reservationCapacity)
   const [updatedTime, setUpdatedTime] = useState({})
   const [reservationInput, setReservationInput] = useState({
     name: '',
@@ -23,17 +30,47 @@ export default function ReservationItem() {
     date: '',
     time: '',
     total_guest: null,
+    credit_card: {
+      card_number: '',
+      card_name: '',
+      security_code: '',
+      expiration_date: '',
+      billing_address: '',
+    },
   })
   const [todayReservations, setTodayReservations] = useState({})
+  const [overPeople, setOverPeople] = useState(false)
+  const timeAvailability = reservationCapacity
+  const holidayDate = holiday
 
   const nextButton = () => {
-    setGuestInformation(true)
-    setDateTimeCard(false)
+    console.log('abc')
+
+    if (cardInformation.isHoliday === false) {
+      setGuestInformation(true)
+      return
+    }
+    if (
+      cardInformation.isHoliday === true &&
+      reservationInput.credit_card.card_number &&
+      reservationInput.credit_card.card_name &&
+      reservationInput.credit_card.security_code &&
+      reservationInput.credit_card.expiration_date &&
+      reservationInput.credit_card.billing_address
+    ) {
+      console.log(reservationInput.credit_card.card_number)
+      console.log(reservationInput.credit_card.card_name)
+      console.log(reservationInput.credit_card.security_code)
+      console.log(reservationInput.credit_card.expiration_date)
+      console.log(reservationInput.credit_card.billing_address)
+
+      setGuestInformation(true)
+      return
+    }
   }
 
   const backButton = () => {
     setGuestInformation(false)
-    setDateTimeCard(true)
   }
 
   const onChangeHandler = (e) => {
@@ -77,6 +114,42 @@ export default function ReservationItem() {
   }
 
   useEffect(() => {
+    // set initial data if user pick another date
+    setReservationInput({
+      name: '',
+      email: '',
+      phone_number: '',
+      date: reservationInput.date,
+      time: '',
+      total_guest: null,
+      credit_card: {
+        card_number: '',
+        card_name: '',
+        security_code: '',
+        expiration_date: '',
+        billing_address: '',
+      },
+    })
+
+    // track the holiday
+    const sliceDate = reservationInput.date.slice(5)
+    for (const date in holidayDate) {
+      if (sliceDate === holidayDate[date].date) {
+        setCardInformation({
+          isHoliday: true,
+          holidayName: holidayDate[date].name,
+          gretting: holidayDate[date].greeting,
+        })
+        break
+      } else {
+        setCardInformation({
+          isHoliday: false,
+          holidayName: '',
+          gretting: '',
+        })
+      }
+    }
+
     // get today reservations
     const todayReserves = getTodayReservations()
     setTodayReservations(todayReserves)
@@ -89,6 +162,7 @@ export default function ReservationItem() {
     // update seat left
     for (const today of todayReserves) {
       for (const time of timeAvailability) {
+        console.log(time.time, today.time)
         if (time.time === today.time) {
           time.seatLeft -= today.total_guest
           break
@@ -99,7 +173,15 @@ export default function ReservationItem() {
     console.log(todayReserves)
   }, [reservationInput.date]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // update time availability after guests number picked
   useEffect(() => {
+    if (reservationInput.total_guest > 9) {
+      setOverPeople(true)
+      return
+    } else {
+      setOverPeople(false)
+    }
+
     for (const time of timeAvailability) {
       if (time.seatLeft - reservationInput.total_guest < 0) {
         time.isAvailable = false
@@ -166,27 +248,22 @@ export default function ReservationItem() {
           </div>
 
           <div id="information">
-            {dateTimeCard === true && (
+            {guestInformation === false && (
               <div id="date-time-card">
-                <div id="date">
-                  <label>Date</label>
-                  <input
-                    className="prevent-select"
-                    type="Date"
-                    id="date"
-                    name="date"
-                    value={reservationInput.date}
-                    onChange={onChangeHandler}
-                    required
-                    // min={new Date().toISOString().split('T')[0]}
-                  />
-                </div>
-
-                <div
-                  id="guest-time"
-                  className="two-rows"
-                  style={{ marginTop: 15 }}
-                >
+                <div className="two-rows">
+                  <div id="date">
+                    <label>Date</label>
+                    <input
+                      className="prevent-select"
+                      type="Date"
+                      id="date"
+                      name="date"
+                      value={reservationInput.date}
+                      onChange={onChangeHandler}
+                      required
+                      // min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
                   <div id="total-guest">
                     <label>Total Guest</label>
                     <select
@@ -213,32 +290,62 @@ export default function ReservationItem() {
                       <option value={10}>9+ Guests</option>
                     </select>
                   </div>
-
-                  <div id="time">
-                    <label>Time</label>
-                    <select
-                      disabled={reservationInput.total_guest === null}
-                      type="text"
-                      id="time"
-                      name="time"
-                      placeholder="HH : MM"
-                      value={reservationInput.time}
-                      onChange={onChangeHandler}
-                      required
-                    >
-                      <option disabled selected value="">
-                        choose...
-                      </option>
-                      {Object.keys(updatedTime).map((time) => (
-                        <option>{updatedTime[time].time}</option>
-                      ))}
-                    </select>
-                  </div>
                 </div>
 
-                {cardInformation ?? (
+                {reservationInput.total_guest != null && (
+                  <div id="time">
+                    {overPeople === true && (
+                      <p id="large-party-warning">
+                        <FontAwesomeIcon
+                          icon={faCircleExclamation}
+                          style={{ marginRight: 10 }}
+                        />
+                        Unfortunately, your party is too large to make an online
+                        reservation. We recommend contacting the restaurant
+                        directly.
+                      </p>
+                    )}
+
+                    {overPeople === false &&
+                      Object.keys(updatedTime).map((time) => (
+                        <button
+                          type="button"
+                          key={time}
+                          id="time"
+                          name="time"
+                          onClick={(e) => {
+                            setReservationInput({
+                              ...reservationInput,
+                              [e.target.name]: e.target.innerHTML,
+                            })
+                            nextButton()
+                          }}
+                        >
+                          {updatedTime[time].time}
+                        </button>
+                      ))}
+                  </div>
+                )}
+
+                {cardInformation.isHoliday === true && (
                   <div id="card-information">
+                    <div id="warning">
+                      <p>
+                        <FontAwesomeIcon
+                          icon={faCircleExclamation}
+                          style={{ marginRight: 10 }}
+                        />
+                        {cardInformation.gretting} Please note that we will
+                        assess a fee of 10.00 USD if you do not show up on{' '}
+                        {reservationInput.date}
+                      </p>
+                    </div>
+
                     <p>
+                      <FontAwesomeIcon
+                        icon={faUnlockKeyhole}
+                        style={{ marginRight: 5 }}
+                      />{' '}
                       Your payment is secure. Your card details will only be
                       shared with us.
                     </p>
@@ -246,52 +353,115 @@ export default function ReservationItem() {
                       <div id="card-name">
                         <label>Card Holder Name</label>
                         <input
-                          type="text"
+                          type="string"
                           id="card-name"
-                          name="card-name"
+                          name="card_name"
                           placeholder="Enter Card Holder Name"
                           required
+                          value={reservationInput.credit_card.card_name}
+                          onChange={(e) => {
+                            setReservationInput({
+                              ...reservationInput,
+                              credit_card: {
+                                ...reservationInput.credit_card,
+                                [e.target.name]: e.target.value,
+                              },
+                            })
+                          }}
                         />
                       </div>
 
                       <div id="card-number">
                         <label>Card Number</label>
-                        <input
-                          type="number"
+                        <InputMask
+                          type="string"
+                          mask="9999 9999 9999 9999"
                           id="card-number"
-                          name="card-number"
+                          name="card_number"
                           placeholder="Enter Card Number"
+                          value={reservationInput.credit_card.card_number}
+                          onChange={(e) => {
+                            setReservationInput({
+                              ...reservationInput,
+                              credit_card: {
+                                ...reservationInput.credit_card,
+                                [e.target.name]: e.target.value,
+                              },
+                            })
+                          }}
                           required
                         />
                       </div>
                     </div>
-                    <div className="two-rows">
+                    <div id="expriration-security-code" className="two-rows">
                       <div id="expiration-date">
                         <label>Expiration Date</label>
                         <input
-                          type="number"
+                          type="month"
                           id="expiration-date"
-                          name="expiration-date"
+                          name="expiration_date"
                           placeholder="MM / YY"
+                          value={reservationInput.credit_card.expiration_date}
+                          onChange={(e) => {
+                            setReservationInput({
+                              ...reservationInput,
+                              credit_card: {
+                                ...reservationInput.credit_card,
+                                [e.target.name]: e.target.value,
+                              },
+                            })
+                          }}
                           required
                         />
                       </div>
 
                       <div id="security-code">
                         <label>Security Code</label>
-                        <input
-                          type="number"
+                        <InputMask
+                          type="tel"
+                          mask="9999"
                           id="security-code"
-                          name="security-code"
+                          name="security_code"
                           placeholder="3 or 4 digits"
+                          value={reservationInput.credit_card.security_code}
+                          onChange={(e) => {
+                            setReservationInput({
+                              ...reservationInput,
+                              credit_card: {
+                                ...reservationInput.credit_card,
+                                [e.target.name]: e.target.value,
+                              },
+                            })
+                          }}
                           required
+                        />
+                      </div>
+                    </div>
+                    <div id="billing-address">
+                      <label>Billing Address</label>
+                      <div>
+                        <input
+                          type="text"
+                          id="billing_address"
+                          name="billing_address"
+                          style={{ marginTop: 0 }}
+                          value={reservationInput.credit_card.billing_address}
+                          onChange={(e) => {
+                            setReservationInput({
+                              ...reservationInput,
+                              credit_card: {
+                                ...reservationInput.credit_card,
+                                [e.target.name]: e.target.value,
+                              },
+                            })
+                          }}
                         />
                       </div>
                     </div>
                   </div>
                 )}
 
-                <div
+                {/* <div
                   className={`${
                     reservationInput.date === '' || reservationInput.time === ''
                       ? 'disabled'
@@ -308,7 +478,7 @@ export default function ReservationItem() {
                   >
                     Next
                   </button>
-                </div>
+                </div> */}
               </div>
             )}
 
@@ -329,14 +499,14 @@ export default function ReservationItem() {
                   </div>
                   <div id="phone-number" style={{ marginTop: 0 }}>
                     <label>Phone Number</label>
-                    <input
+                    <InputMask
                       type="tel"
+                      mask="(999)-999-9999"
                       id="phone-number"
                       name="phone_number"
-                      placeholder="123-456-7890"
-                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                      placeholder="(___)-___-___"
                       value={reservationInput.phone_number}
-                      maxLength="12"
+                      // maxLength="12"
                       onChange={onChangeHandler}
                       required
                     />
@@ -366,7 +536,11 @@ export default function ReservationItem() {
             )}
 
             <p id="total-booked">
-              <FontAwesomeIcon icon={faArrowTrendUp} /> Booked {''}
+              <FontAwesomeIcon
+                icon={faArrowTrendUp}
+                style={{ marginRight: 5 }}
+              />{' '}
+              Booked {''}
               {todayReservations.length} times today
             </p>
           </div>

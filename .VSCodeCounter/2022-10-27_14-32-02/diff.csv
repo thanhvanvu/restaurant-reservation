@@ -1,0 +1,9 @@
+"filename", "language", "CSS", "JavaScript", "JSON", "comment", "blank", "total"
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\package-lock.json", "JSON", 0, 0, 23, 0, 0, 23
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\package.json", "JSON", 0, 0, 1, 0, 0, 1
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\src\App.css", "CSS", 3, 0, 0, 0, 1, 4
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\src\components\Header\Header.js", "JavaScript", 0, 5, 0, 0, 0, 5
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\src\components\Login\Login.css", "CSS", -3, 0, 0, 0, -1, -4
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\src\components\Reservation\Reservation.css", "CSS", 31, 0, 0, 0, 4, 35
+"d:\UH\4351 - Fundamental of software\project\16 Table availability - Copy\front-end\src\components\Reservation\ReservationItem.js", "JavaScript", 0, 30, 0, 18, 3, 51
+"Total", "-", 31, 35, 24, 18, 7, 115

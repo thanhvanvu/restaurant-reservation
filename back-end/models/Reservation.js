@@ -46,6 +46,31 @@ const reservationSchema = new mongoose.Schema(
       ref: 'User',
     },
 
+    credit_card: {
+      card_number: {
+        type: String,
+        trim: true,
+        default: '',
+      },
+      card_name: {
+        type: String,
+        trim: true,
+        default: '',
+      },
+      security_code: {
+        type: Number,
+        trim: true,
+      },
+      expiration_date: {
+        type: Date,
+        trim: true,
+      },
+      billing_address: {
+        type: String,
+        trim: true,
+      },
+    },
+
     // randomGeneratedString: {
     //   type: String,
     //   minLength: 5,
