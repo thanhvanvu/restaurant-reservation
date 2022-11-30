@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 exports.verifyToken = (req, res, next) => {
   // Access Authorization from req header
   const Authorization = req.header('authorization')
+  console.log(Authorization)
 
   if (!Authorization) {
     // allow none user to create a reservation

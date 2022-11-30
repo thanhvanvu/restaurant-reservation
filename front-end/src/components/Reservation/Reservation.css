@@ -27,9 +27,16 @@
   padding: 20px 20px 20px 20px;
 }
 
-#reservation-form #information > div:not(#guest-information) {
+#reservation-form
+  #information
+  #reservation-form
+  #information
+  > div:not(#guest-information) {
   margin-top: 15px;
 }
+/* #reservation-form #information > div > div {
+  margin-top: 10px;
+} */
 
 #reservation-form #information div > input {
   margin-top: 10px;
@@ -39,7 +46,7 @@
   margin-top: 10px;
 }
 
-#reservation-form #information #date-time-card {
+#reservation-form #information #guest-time-card {
   margin-top: 0px;
 }
 
@@ -118,7 +125,7 @@
 }
 
 #reservation-form #information #date input {
-  display: inline-block;
+  display: block;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
@@ -131,9 +138,28 @@
   background-color: #f0eef0;
   outline: none;
   width: 100%;
+
+  position: relative;
 }
+
+#reservation-form
+  #information
+  #date
+  input[type='date']::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
 #reservation-form #information #time select {
-  display: inline-block;
+  display: block;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
@@ -146,7 +172,24 @@
   background-color: #f0eef0;
   outline: none;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 10px;
+}
+
+#reservation-form #information #total-guest select {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .two-rows {
@@ -194,4 +237,9 @@
   text-align: center;
   font-size: 80px;
   color: #c04ae2;
+}
+
+#total-booked {
+  font-family: poppins-medium;
+  margin-top: 15px;
 }

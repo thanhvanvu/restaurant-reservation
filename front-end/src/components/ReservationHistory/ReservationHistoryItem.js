@@ -4,7 +4,7 @@ export default function ReservationHistoryItem({ reservation }) {
   let formattedDate = ''
   if (reservation.date) {
     const d = new Date(reservation.date)
-    const date = d.getDate()
+    const date = d.getDate() + 1
 
     // Since getMonth() returns month from 0-11 not 1-12
     const month = d.getMonth() + 1
