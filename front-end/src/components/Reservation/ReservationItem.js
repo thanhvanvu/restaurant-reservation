@@ -8,9 +8,11 @@ import {
   faArrowTrendUp,
   faUnlockKeyhole,
   faCircleExclamation,
+  faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons'
 import { reservationCapacity, holiday } from '../../actions/initalData'
 import 'font-awesome/css/font-awesome.min.css'
+import { Link } from 'react-router-dom'
 
 export default function ReservationItem() {
   const { state, dispatch } = useContext(AppContext)
@@ -31,41 +33,47 @@ export default function ReservationItem() {
     time: '',
     total_guest: null,
     credit_card: {
-      card_number: '',
       card_name: '',
+      card_number: '',
       security_code: '',
       expiration_date: '',
       billing_address: '',
     },
+    preferredDinner: '',
   })
   const [todayReservations, setTodayReservations] = useState({})
   const [overPeople, setOverPeople] = useState(false)
+  const [clickShowError, setClickShowError] = useState(false)
   const timeAvailability = reservationCapacity
   const holidayDate = holiday
+  const errorCheck = {
+    card_name: false,
+    card_number: false,
+    security_code: false,
+    expiration_date: false,
+    billing_address: false,
+  }
 
   const nextButton = () => {
-    console.log('abc')
-
     if (cardInformation.isHoliday === false) {
       setGuestInformation(true)
       return
     }
+    console.log(cardInformation.isHoliday)
+    console.log(reservationInput.credit_card.card_number.length)
+    console.log(reservationInput.credit_card.card_name)
+    console.log(reservationInput.credit_card.security_code.length)
+    console.log(reservationInput.credit_card.expiration_date)
+    console.log(reservationInput.credit_card.billing_address)
     if (
       cardInformation.isHoliday === true &&
-      reservationInput.credit_card.card_number &&
+      reservationInput.credit_card.card_number.length === 19 &&
       reservationInput.credit_card.card_name &&
-      reservationInput.credit_card.security_code &&
+      reservationInput.credit_card.security_code.length === 4 &&
       reservationInput.credit_card.expiration_date &&
       reservationInput.credit_card.billing_address
     ) {
-      console.log(reservationInput.credit_card.card_number)
-      console.log(reservationInput.credit_card.card_name)
-      console.log(reservationInput.credit_card.security_code)
-      console.log(reservationInput.credit_card.expiration_date)
-      console.log(reservationInput.credit_card.billing_address)
-
       setGuestInformation(true)
-      return
     }
   }
 
@@ -113,8 +121,9 @@ export default function ReservationItem() {
     return todayReservation
   }
 
+  // set initial data if user pick another date
   useEffect(() => {
-    // set initial data if user pick another date
+    setClickShowError(false)
     setReservationInput({
       name: '',
       email: '',
@@ -170,7 +179,7 @@ export default function ReservationItem() {
       }
     }
 
-    console.log(todayReserves)
+    // console.log(todayReserves)
   }, [reservationInput.date]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // update time availability after guests number picked
@@ -196,13 +205,68 @@ export default function ReservationItem() {
     setUpdatedTime(updatedTime)
   }, [reservationInput.total_guest]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // function to set the same address from the profile
+  const setSameAddress = (e) => {
+    if (user === null) {
+      return
+    }
+
+    const address =
+      user.mailing_address.address +
+      ' ' +
+      user.mailing_address.city +
+      ' ' +
+      user.mailing_address.state +
+      ' ' +
+      user.mailing_address.zipcode
+    if (e.target.checked === true) {
+      setReservationInput({
+        ...reservationInput,
+        credit_card: {
+          ...reservationInput.credit_card,
+          billing_address: address,
+        },
+      })
+    } else {
+      setReservationInput({
+        ...reservationInput,
+        credit_card: {
+          ...reservationInput.credit_card,
+          billing_address: '',
+        },
+      })
+    }
+  }
+
+  // function to create the preffered dinner #
+  const preferredDinner = (length) => {
+    let result = ''
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const charactersLength = characters.length
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+  }
   // Submit button
   const onSubmitHandler = async (e) => {
     try {
       // prevent page will refresh
       e.preventDefault()
 
-      window.confirm('Are you sure to reserve the table ?')
+      const dinnerPreferred = preferredDinner(5).toUpperCase()
+      setReservationInput({
+        ...reservationInput,
+        preferredDinner: dinnerPreferred,
+      })
+
+      // if they cancel, do nothing
+      if (window.confirm('Are you sure to reserve the table ?')) {
+        console.log('true')
+      } else {
+        return
+      }
 
       let option = {}
 
@@ -239,6 +303,15 @@ export default function ReservationItem() {
       console.log(error)
     }
   }
+
+  for (const info in reservationInput.credit_card) {
+    if (reservationInput.credit_card[info] === '') {
+      errorCheck[info] = true
+    } else {
+      errorCheck[info] = false
+    }
+  }
+
   return (
     <div>
       {greeting === false && (
@@ -314,11 +387,13 @@ export default function ReservationItem() {
                           id="time"
                           name="time"
                           onClick={(e) => {
+                            setClickShowError(true)
                             setReservationInput({
                               ...reservationInput,
                               [e.target.name]: e.target.innerHTML,
                             })
-                            nextButton()
+
+                            nextButton(e)
                           }}
                         >
                           {updatedTime[time].time}
@@ -351,7 +426,19 @@ export default function ReservationItem() {
                     </p>
                     <div id="name-number" className="two-rows">
                       <div id="card-name">
-                        <label>Card Holder Name</label>
+                        <label>Card Holder Name*</label>
+
+                        {clickShowError === true &&
+                          errorCheck.card_name === true && (
+                            <span className="card-error">
+                              <FontAwesomeIcon
+                                icon={faTriangleExclamation}
+                                style={{ marginRight: 5 }}
+                              />
+                              Please fill out this field
+                            </span>
+                          )}
+
                         <input
                           type="string"
                           id="card-name"
@@ -372,7 +459,17 @@ export default function ReservationItem() {
                       </div>
 
                       <div id="card-number">
-                        <label>Card Number</label>
+                        <label>Card Number*</label>
+                        {clickShowError === true &&
+                          errorCheck.card_number === true && (
+                            <span className="card-error">
+                              <FontAwesomeIcon
+                                icon={faTriangleExclamation}
+                                style={{ marginRight: 5 }}
+                              />
+                              Please fill out this field
+                            </span>
+                          )}
                         <InputMask
                           type="string"
                           mask="9999 9999 9999 9999"
@@ -395,7 +492,17 @@ export default function ReservationItem() {
                     </div>
                     <div id="expriration-security-code" className="two-rows">
                       <div id="expiration-date">
-                        <label>Expiration Date</label>
+                        <label>Expiration Date*</label>
+                        {clickShowError === true &&
+                          errorCheck.expiration_date === true && (
+                            <span className="card-error">
+                              <FontAwesomeIcon
+                                icon={faTriangleExclamation}
+                                style={{ marginRight: 5 }}
+                              />
+                              Please fill out this field
+                            </span>
+                          )}
                         <input
                           type="month"
                           id="expiration-date"
@@ -416,7 +523,17 @@ export default function ReservationItem() {
                       </div>
 
                       <div id="security-code">
-                        <label>Security Code</label>
+                        <label>Security Code*</label>
+                        {clickShowError === true &&
+                          errorCheck.security_code === true && (
+                            <span className="card-error">
+                              <FontAwesomeIcon
+                                icon={faTriangleExclamation}
+                                style={{ marginRight: 5 }}
+                              />
+                              Please fill out this field
+                            </span>
+                          )}
                         <InputMask
                           type="tel"
                           mask="9999"
@@ -438,7 +555,26 @@ export default function ReservationItem() {
                       </div>
                     </div>
                     <div id="billing-address">
-                      <label>Billing Address</label>
+                      <label>Billing Address*</label>
+                      <label id="label-checkbox">
+                        <input
+                          type="checkbox"
+                          id="checkbox"
+                          onClick={setSameAddress}
+                        />
+                        Same as profile address
+                      </label>
+
+                      {clickShowError === true &&
+                        errorCheck.billing_address === true && (
+                          <span className="card-error">
+                            <FontAwesomeIcon
+                              icon={faTriangleExclamation}
+                              style={{ marginRight: 5 }}
+                            />
+                            Please fill out this field
+                          </span>
+                        )}
                       <div>
                         <input
                           type="text"
@@ -460,25 +596,6 @@ export default function ReservationItem() {
                     </div>
                   </div>
                 )}
-
-                {/* <div
-                  className={`${
-                    reservationInput.date === '' || reservationInput.time === ''
-                      ? 'disabled'
-                      : 'reservation-button'
-                  }`}
-                >
-                  <button
-                    onClick={nextButton}
-                    className="prevent-select"
-                    disabled={
-                      reservationInput.date === '' ||
-                      reservationInput.time === ''
-                    }
-                  >
-                    Next
-                  </button>
-                </div> */}
               </div>
             )}
 
@@ -506,7 +623,6 @@ export default function ReservationItem() {
                       name="phone_number"
                       placeholder="(___)-___-___"
                       value={reservationInput.phone_number}
-                      // maxLength="12"
                       onChange={onChangeHandler}
                       required
                     />
@@ -548,9 +664,31 @@ export default function ReservationItem() {
       )}
 
       {greeting === true && (
-        <h1 id="greeting">
-          Thank you {reservationInput.name} for the reservation!
-        </h1>
+        <>
+          {user ? (
+            <>
+              <h1 className="greeting">
+                Thank you {reservationInput.name} for the reservation!
+              </h1>
+              <h1 className="greeting" style={{ fontSize: 30, marginTop: 20 }}>
+                Here is your preferred dinner:{' '}
+                {reservationInput.preferredDinner}
+              </h1>
+            </>
+          ) : (
+            <>
+              <h1 className="greeting">
+                Thank you {reservationInput.name} for the reservation!
+              </h1>
+              <h3 className="greeting" style={{ fontSize: 20 }}>
+                Looks like you are not our member, please join us{' '}
+                <Link to="/register" style={{ color: 'blue' }}>
+                  here
+                </Link>
+              </h3>
+            </>
+          )}
+        </>
       )}
     </div>
   )

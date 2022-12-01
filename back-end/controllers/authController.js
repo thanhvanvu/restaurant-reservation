@@ -51,6 +51,7 @@ exports.login = async (req, res, next) => {
       res.status(200).json({
         status: 'Success',
         data: {
+          isAdmin: user.isAdmin,
           token,
           userId: user._id,
           userName: user.name,
@@ -80,6 +81,7 @@ exports.getCurrentUser = async (req, res, next) => {
         userId: user._id,
         userName: user.name,
         mailing_address: user.mailing_address,
+        isAdmin: user.isAdmin,
       }
     }
 

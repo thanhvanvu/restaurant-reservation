@@ -35,15 +35,15 @@ export default function Login() {
 
       console.log(response)
       // get TOKEN, userName
-      const { token, userName, userId, mailing_address } = response.data.data
+      const user = response.data.data
 
       // save TOKEN in localstorage
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', user.token)
 
       // Use DISPATCH to update the initial state
       dispatch({
         type: 'CURRENT_USER',
-        payload: { userName, userId, mailing_address },
+        payload: user,
       })
 
       // Navigate to homepage after login

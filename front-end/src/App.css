@@ -134,6 +134,15 @@
   background-color: #c04ae2;
 }
 
+.card-error {
+  font-family: poppins-regular;
+  font-size: 15px;
+  line-height: 26px;
+  display: inline;
+  margin-left: 15px;
+  color: red;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -45,18 +45,30 @@ export default function Header() {
               <li onClick={signOut}>
                 <Link to="/">Sign Out</Link>
               </li>
+
+              {user.isAdmin === true ? (
+                <></>
+              ) : (
+                <>
+                  <li
+                    className="reservation"
+                    onClick={() => {
+                      window.location.reload()
+                    }}
+                  >
+                    <Link to="/reservation">Reservation</Link>
+                  </li>
+                </>
+              )}
+            </>
+          ) : (
+            <>
               <li
                 className="reservation"
                 onClick={() => {
                   window.location.reload()
                 }}
               >
-                <Link to="/reservation">Reservation</Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="reservation">
                 <Link to="/reservation">Reservation</Link>
               </li>
               <li className="reservation">

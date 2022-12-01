@@ -67,7 +67,7 @@
   margin-top: 10px;
 }
 #reservation-form #information #full-name label {
-  display: block;
+  display: inline;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
@@ -114,7 +114,7 @@
 }
 
 #reservation-form #information #date label {
-  display: block;
+  display: inline;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
@@ -134,7 +134,6 @@
   background-color: #f0eef0;
   outline: none;
   width: 100%;
-
   position: relative;
 }
 
@@ -198,7 +197,7 @@
 }
 
 .two-rows div label {
-  display: block;
+  display: inline;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
@@ -228,10 +227,10 @@
   width: 47%;
 }
 
-#greeting {
-  font-family: poppins-medium;
+.greeting {
+  font-family: poppins-regular;
   text-align: center;
-  font-size: 80px;
+  font-size: 50px;
   color: #c04ae2;
 }
 
@@ -272,7 +271,7 @@
 }
 
 #card-information #billing-address label {
-  display: block;
+  display: inline;
   font-family: poppins-medium;
   font-size: 18px;
   line-height: 26px;
@@ -292,6 +291,18 @@
   background-color: #f0eef0;
   outline: none;
   width: 70%;
+}
+
+#card-information #billing-address #label-checkbox {
+  font-size: 15px;
+  font-family: poppins-regular;
+}
+
+#card-information #billing-address #checkbox {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  margin-right: 5px;
 }
 
 #time {
