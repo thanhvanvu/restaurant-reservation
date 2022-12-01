@@ -52,9 +52,9 @@ export default function Header() {
                 <>
                   <li
                     className="reservation"
-                    onClick={() => {
-                      window.location.reload()
-                    }}
+                    // onClick={() => {
+                    //   window.location.reload()
+                    // }}
                   >
                     <Link to="/reservation">Reservation</Link>
                   </li>
@@ -65,9 +65,9 @@ export default function Header() {
             <>
               <li
                 className="reservation"
-                onClick={() => {
-                  window.location.reload()
-                }}
+                // onClick={() => {
+                //   window.location.reload()
+                // }}
               >
                 <Link to="/reservation">Reservation</Link>
               </li>

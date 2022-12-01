@@ -228,7 +228,7 @@
 }
 
 .greeting {
-  font-family: poppins-regular;
+  font-family: poppins-medium;
   text-align: center;
   font-size: 50px;
   color: #c04ae2;
@@ -257,11 +257,11 @@
   margin-top: 10px;
 }
 
-#card-information #warning {
+#card-information .warning {
   text-align: center;
 }
 
-#card-information #warning p {
+#card-information .warning p {
   width: 100%;
   font-size: 15px;
   line-height: 20px;
@@ -342,4 +342,29 @@
   text-align: center;
   display: inline-block;
   padding: 10px 0px;
+}
+
+.unregister-prompt {
+  text-align: center;
+  position: relative;
+}
+
+.unregister-prompt p {
+  width: 100%;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 10px 10px;
+  background-color: #ebeaea;
+  font-family: poppins-regular;
+  border-radius: 5px 5px 0 0;
+}
+
+.unregister-prompt p #discard {
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+}
+
+.greeting-information {
+  background-color: white;
 }

@@ -7,8 +7,11 @@ export default function UserProfileItem({ user }) {
   const [openEditForm, setOpenEditForm] = useState(false)
   const userAddress = user.mailing_address
 
+  console.log(user)
   const [userProfileInput, setUserProfileInput] = useState({
     name: user.userName,
+    preferred_payment: user.preferred_payment,
+
     mailing_address: {
       address: userAddress.address,
       city: userAddress.city,
@@ -75,6 +78,18 @@ export default function UserProfileItem({ user }) {
                     <div id="zipcode">
                       <label>Zip code</label>
                       <p>{userAddress.zipcode}</p>
+                    </div>
+                  </div>
+
+                  <div className="payment-point">
+                    <div className="preferred-payment">
+                      <label>Preferred Payment</label>
+                      <p>{user.preferred_payment}</p>
+                    </div>
+                    <div className="earned-point">
+                      <label>Earned point</label>
+                      <p>0</p>
+                      <label>(Based on $ spent: $1 is 1 point)</label>
                     </div>
                   </div>
                 </div>
@@ -258,6 +273,31 @@ export default function UserProfileItem({ user }) {
                         }}
                         required
                       />
+                    </div>
+                  </div>
+
+                  <div className="payment-point">
+                    <div className="preferred-payment">
+                      <label>Preferred Payment</label>
+                      <select
+                        className="preferred-payment"
+                        name="preferred_payment"
+                        value={userProfileInput.preferred_payment}
+                        onChange={(e) => {
+                          setUserProfileInput({
+                            ...userProfileInput,
+                            [e.target.name]: e.target.value,
+                          })
+                        }}
+                        required
+                      >
+                        <option selected disabled value="">
+                          Choose...
+                        </option>
+                        <option>Cash</option>
+                        <option>Check</option>
+                        <option>Credit Card</option>
+                      </select>
                     </div>
                   </div>
                 </div>

@@ -9,6 +9,7 @@ import {
   faUnlockKeyhole,
   faCircleExclamation,
   faTriangleExclamation,
+  faX,
 } from '@fortawesome/free-solid-svg-icons'
 import { reservationCapacity, holiday } from '../../actions/initalData'
 import 'font-awesome/css/font-awesome.min.css'
@@ -17,6 +18,7 @@ import { Link } from 'react-router-dom'
 export default function ReservationItem() {
   const { state, dispatch } = useContext(AppContext)
   const { user, reservations } = state
+  const [unregisterPrompt, setUnregisterPrompt] = useState(true)
   const [cardInformation, setCardInformation] = useState({
     isHoliday: false,
     holidayName: '',
@@ -59,12 +61,6 @@ export default function ReservationItem() {
       setGuestInformation(true)
       return
     }
-    console.log(cardInformation.isHoliday)
-    console.log(reservationInput.credit_card.card_number.length)
-    console.log(reservationInput.credit_card.card_name)
-    console.log(reservationInput.credit_card.security_code.length)
-    console.log(reservationInput.credit_card.expiration_date)
-    console.log(reservationInput.credit_card.billing_address)
     if (
       cardInformation.isHoliday === true &&
       reservationInput.credit_card.card_number.length === 19 &&
@@ -171,7 +167,6 @@ export default function ReservationItem() {
     // update seat left
     for (const today of todayReserves) {
       for (const time of timeAvailability) {
-        console.log(time.time, today.time)
         if (time.time === today.time) {
           time.seatLeft -= today.total_guest
           break
@@ -262,7 +257,7 @@ export default function ReservationItem() {
       })
 
       // if they cancel, do nothing
-      if (window.confirm('Are you sure to reserve the table ?')) {
+      if (window.confirm('Are you sure to reserve the table?')) {
         console.log('true')
       } else {
         return
@@ -315,377 +310,495 @@ export default function ReservationItem() {
   return (
     <div>
       {greeting === false && (
-        <form id="reservation-form" onSubmit={onSubmitHandler}>
-          <div id="form-name">
-            <h2>Reservation Form</h2>
-          </div>
+        <>
+          {user === null && unregisterPrompt === true && (
+            <div className="unregister-prompt">
+              <p>
+                <FontAwesomeIcon
+                  icon={faCircleExclamation}
+                  style={{ marginRight: 10 }}
+                />
+                Looks like you are not our member, please join us{' '}
+                <Link
+                  to="/register"
+                  style={{ color: 'blue', textDecoration: 'underline' }}
+                >
+                  here
+                </Link>
+                <FontAwesomeIcon
+                  id="discard"
+                  icon={faX}
+                  onClick={() => {
+                    setUnregisterPrompt(false)
+                  }}
+                ></FontAwesomeIcon>
+              </p>
+            </div>
+          )}
 
-          <div id="information">
-            {guestInformation === false && (
-              <div id="date-time-card">
-                <div className="two-rows">
-                  <div id="date">
-                    <label>Date</label>
-                    <input
-                      className="prevent-select"
-                      type="Date"
-                      id="date"
-                      name="date"
-                      value={reservationInput.date}
-                      onChange={onChangeHandler}
-                      required
-                      // min={new Date().toISOString().split('T')[0]}
-                    />
+          <form id="reservation-form" onSubmit={onSubmitHandler}>
+            <div id="form-name">
+              <h2>Reservation Form</h2>
+            </div>
+
+            <div id="information">
+              {guestInformation === false && (
+                <div id="date-time-card">
+                  <div className="two-rows">
+                    <div id="date">
+                      <label>Date</label>
+                      <input
+                        className="prevent-select"
+                        type="Date"
+                        id="date"
+                        name="date"
+                        value={reservationInput.date}
+                        onChange={onChangeHandler}
+                        required
+                        min={new Date().toISOString().split('T')[0]}
+                      />
+                    </div>
+                    <div id="total-guest">
+                      <label>Total Guest</label>
+                      <select
+                        disabled={reservationInput.date === ''}
+                        type="text"
+                        id="total-guest"
+                        name="total_guest"
+                        value={reservationInput.total_guest}
+                        onChange={onChangeHandler}
+                        required
+                      >
+                        <option disabled selected value="">
+                          choose...
+                        </option>
+                        <option value={1}>1 Guest</option>
+                        <option value={2}>2 Guests</option>
+                        <option value={3}>3 Guests</option>
+                        <option value={4}>4 Guests</option>
+                        <option value={5}>5 Guests</option>
+                        <option value={6}>6 Guests</option>
+                        <option value={7}>7 Guests</option>
+                        <option value={8}>8 Guests</option>
+                        <option value={9}>9 Guests</option>
+                        <option value={10}>9+ Guests</option>
+                      </select>
+                    </div>
                   </div>
-                  <div id="total-guest">
-                    <label>Total Guest</label>
-                    <select
-                      disabled={reservationInput.date === ''}
-                      type="text"
-                      id="total-guest"
-                      name="total_guest"
-                      value={reservationInput.total_guest}
-                      onChange={onChangeHandler}
-                      required
-                    >
-                      <option disabled selected value="">
-                        choose...
-                      </option>
-                      <option value={1}>1 Guest</option>
-                      <option value={2}>2 Guests</option>
-                      <option value={3}>3 Guests</option>
-                      <option value={4}>4 Guests</option>
-                      <option value={5}>5 Guests</option>
-                      <option value={6}>6 Guests</option>
-                      <option value={7}>7 Guests</option>
-                      <option value={8}>8 Guests</option>
-                      <option value={9}>9 Guests</option>
-                      <option value={10}>9+ Guests</option>
-                    </select>
-                  </div>
-                </div>
 
-                {reservationInput.total_guest != null && (
-                  <div id="time">
-                    {overPeople === true && (
-                      <p id="large-party-warning">
-                        <FontAwesomeIcon
-                          icon={faCircleExclamation}
-                          style={{ marginRight: 10 }}
-                        />
-                        Unfortunately, your party is too large to make an online
-                        reservation. We recommend contacting the restaurant
-                        directly.
-                      </p>
-                    )}
+                  {reservationInput.total_guest != null && (
+                    <div id="time">
+                      {overPeople === true && (
+                        <p id="large-party-warning">
+                          <FontAwesomeIcon
+                            icon={faCircleExclamation}
+                            style={{ marginRight: 10 }}
+                          />
+                          Unfortunately, your party is too large to make an
+                          online reservation. We recommend contacting the
+                          restaurant directly.
+                        </p>
+                      )}
 
-                    {overPeople === false &&
-                      Object.keys(updatedTime).map((time) => (
-                        <button
-                          type="button"
-                          key={time}
-                          id="time"
-                          name="time"
-                          onClick={(e) => {
-                            setClickShowError(true)
-                            setReservationInput({
-                              ...reservationInput,
-                              [e.target.name]: e.target.innerHTML,
-                            })
+                      {overPeople === false &&
+                        Object.keys(updatedTime).map((time) => (
+                          <button
+                            type="button"
+                            key={time}
+                            id="time"
+                            name="time"
+                            onClick={(e) => {
+                              setClickShowError(true)
+                              setReservationInput({
+                                ...reservationInput,
+                                [e.target.name]: e.target.innerHTML,
+                              })
 
-                            nextButton(e)
-                          }}
-                        >
-                          {updatedTime[time].time}
-                        </button>
-                      ))}
-                  </div>
-                )}
+                              nextButton(e)
+                            }}
+                          >
+                            {updatedTime[time].time}
+                          </button>
+                        ))}
+                    </div>
+                  )}
 
-                {cardInformation.isHoliday === true && (
-                  <div id="card-information">
-                    <div id="warning">
+                  {cardInformation.isHoliday === true && (
+                    <div id="card-information">
+                      <div id="warning" className="warning">
+                        <p>
+                          <FontAwesomeIcon
+                            icon={faCircleExclamation}
+                            style={{ marginRight: 10 }}
+                          />
+                          {cardInformation.gretting} Please note that we will
+                          assess a fee of 10.00 USD if you do not show up on{' '}
+                          {reservationInput.date}
+                        </p>
+                      </div>
+
                       <p>
                         <FontAwesomeIcon
-                          icon={faCircleExclamation}
-                          style={{ marginRight: 10 }}
-                        />
-                        {cardInformation.gretting} Please note that we will
-                        assess a fee of 10.00 USD if you do not show up on{' '}
-                        {reservationInput.date}
+                          icon={faUnlockKeyhole}
+                          style={{ marginRight: 5 }}
+                        />{' '}
+                        Your payment is secure. Your card details will only be
+                        shared with us.
                       </p>
+                      <div id="name-number" className="two-rows">
+                        <div id="card-name">
+                          <label>Card Holder Name*</label>
+
+                          {clickShowError === true &&
+                            errorCheck.card_name === true && (
+                              <span className="card-error">
+                                <FontAwesomeIcon
+                                  icon={faTriangleExclamation}
+                                  style={{ marginRight: 5 }}
+                                />
+                                Please fill out this field
+                              </span>
+                            )}
+
+                          <input
+                            type="string"
+                            id="card-name"
+                            name="card_name"
+                            placeholder="Enter Card Holder Name"
+                            required
+                            value={reservationInput.credit_card.card_name}
+                            onChange={(e) => {
+                              setReservationInput({
+                                ...reservationInput,
+                                credit_card: {
+                                  ...reservationInput.credit_card,
+                                  [e.target.name]: e.target.value,
+                                },
+                              })
+                            }}
+                          />
+                        </div>
+
+                        <div id="card-number">
+                          <label>Card Number*</label>
+                          {clickShowError === true &&
+                            errorCheck.card_number === true && (
+                              <span className="card-error">
+                                <FontAwesomeIcon
+                                  icon={faTriangleExclamation}
+                                  style={{ marginRight: 5 }}
+                                />
+                                Please fill out this field
+                              </span>
+                            )}
+                          <InputMask
+                            type="string"
+                            mask="9999 9999 9999 9999"
+                            id="card-number"
+                            name="card_number"
+                            placeholder="Enter Card Number"
+                            value={reservationInput.credit_card.card_number}
+                            onChange={(e) => {
+                              setReservationInput({
+                                ...reservationInput,
+                                credit_card: {
+                                  ...reservationInput.credit_card,
+                                  [e.target.name]: e.target.value,
+                                },
+                              })
+                            }}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div id="expriration-security-code" className="two-rows">
+                        <div id="expiration-date">
+                          <label>Expiration Date*</label>
+                          {clickShowError === true &&
+                            errorCheck.expiration_date === true && (
+                              <span className="card-error">
+                                <FontAwesomeIcon
+                                  icon={faTriangleExclamation}
+                                  style={{ marginRight: 5 }}
+                                />
+                                Please fill out this field
+                              </span>
+                            )}
+                          <input
+                            type="month"
+                            id="expiration-date"
+                            name="expiration_date"
+                            placeholder="MM / YY"
+                            value={reservationInput.credit_card.expiration_date}
+                            onChange={(e) => {
+                              setReservationInput({
+                                ...reservationInput,
+                                credit_card: {
+                                  ...reservationInput.credit_card,
+                                  [e.target.name]: e.target.value,
+                                },
+                              })
+                            }}
+                            required
+                          />
+                        </div>
+
+                        <div id="security-code">
+                          <label>Security Code*</label>
+                          {clickShowError === true &&
+                            errorCheck.security_code === true && (
+                              <span className="card-error">
+                                <FontAwesomeIcon
+                                  icon={faTriangleExclamation}
+                                  style={{ marginRight: 5 }}
+                                />
+                                Please fill out this field
+                              </span>
+                            )}
+                          <InputMask
+                            type="tel"
+                            mask="9999"
+                            id="security-code"
+                            name="security_code"
+                            placeholder="3 or 4 digits"
+                            value={reservationInput.credit_card.security_code}
+                            onChange={(e) => {
+                              setReservationInput({
+                                ...reservationInput,
+                                credit_card: {
+                                  ...reservationInput.credit_card,
+                                  [e.target.name]: e.target.value,
+                                },
+                              })
+                            }}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div id="billing-address">
+                        <label>Billing Address*</label>
+                        <label id="label-checkbox">
+                          <input
+                            type="checkbox"
+                            id="checkbox"
+                            onClick={setSameAddress}
+                          />
+                          Same as profile address
+                        </label>
+
+                        {clickShowError === true &&
+                          errorCheck.billing_address === true && (
+                            <span className="card-error">
+                              <FontAwesomeIcon
+                                icon={faTriangleExclamation}
+                                style={{ marginRight: 5 }}
+                              />
+                              Please fill out this field
+                            </span>
+                          )}
+                        <div>
+                          <input
+                            type="text"
+                            id="billing_address"
+                            name="billing_address"
+                            style={{ marginTop: 0 }}
+                            value={reservationInput.credit_card.billing_address}
+                            onChange={(e) => {
+                              setReservationInput({
+                                ...reservationInput,
+                                credit_card: {
+                                  ...reservationInput.credit_card,
+                                  [e.target.name]: e.target.value,
+                                },
+                              })
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
+                  )}
+                </div>
+              )}
 
-                    <p>
-                      <FontAwesomeIcon
-                        icon={faUnlockKeyhole}
-                        style={{ marginRight: 5 }}
-                      />{' '}
-                      Your payment is secure. Your card details will only be
-                      shared with us.
-                    </p>
-                    <div id="name-number" className="two-rows">
-                      <div id="card-name">
-                        <label>Card Holder Name*</label>
-
-                        {clickShowError === true &&
-                          errorCheck.card_name === true && (
-                            <span className="card-error">
-                              <FontAwesomeIcon
-                                icon={faTriangleExclamation}
-                                style={{ marginRight: 5 }}
-                              />
-                              Please fill out this field
-                            </span>
-                          )}
-
-                        <input
-                          type="string"
-                          id="card-name"
-                          name="card_name"
-                          placeholder="Enter Card Holder Name"
-                          required
-                          value={reservationInput.credit_card.card_name}
-                          onChange={(e) => {
-                            setReservationInput({
-                              ...reservationInput,
-                              credit_card: {
-                                ...reservationInput.credit_card,
-                                [e.target.name]: e.target.value,
-                              },
-                            })
-                          }}
-                        />
-                      </div>
-
-                      <div id="card-number">
-                        <label>Card Number*</label>
-                        {clickShowError === true &&
-                          errorCheck.card_number === true && (
-                            <span className="card-error">
-                              <FontAwesomeIcon
-                                icon={faTriangleExclamation}
-                                style={{ marginRight: 5 }}
-                              />
-                              Please fill out this field
-                            </span>
-                          )}
-                        <InputMask
-                          type="string"
-                          mask="9999 9999 9999 9999"
-                          id="card-number"
-                          name="card_number"
-                          placeholder="Enter Card Number"
-                          value={reservationInput.credit_card.card_number}
-                          onChange={(e) => {
-                            setReservationInput({
-                              ...reservationInput,
-                              credit_card: {
-                                ...reservationInput.credit_card,
-                                [e.target.name]: e.target.value,
-                              },
-                            })
-                          }}
-                          required
-                        />
-                      </div>
+              {guestInformation === true && (
+                <div id="guest-information">
+                  <div className="two-rows" style={{ marginTop: 0 }}>
+                    <div id="full-name" style={{ marginTop: 0 }}>
+                      <label>Full Name</label>
+                      <input
+                        type="text"
+                        id="full-name"
+                        name="name"
+                        placeholder="Enter Full Name"
+                        value={reservationInput.name}
+                        onChange={onChangeHandler}
+                        required
+                      />
                     </div>
-                    <div id="expriration-security-code" className="two-rows">
-                      <div id="expiration-date">
-                        <label>Expiration Date*</label>
-                        {clickShowError === true &&
-                          errorCheck.expiration_date === true && (
-                            <span className="card-error">
-                              <FontAwesomeIcon
-                                icon={faTriangleExclamation}
-                                style={{ marginRight: 5 }}
-                              />
-                              Please fill out this field
-                            </span>
-                          )}
-                        <input
-                          type="month"
-                          id="expiration-date"
-                          name="expiration_date"
-                          placeholder="MM / YY"
-                          value={reservationInput.credit_card.expiration_date}
-                          onChange={(e) => {
-                            setReservationInput({
-                              ...reservationInput,
-                              credit_card: {
-                                ...reservationInput.credit_card,
-                                [e.target.name]: e.target.value,
-                              },
-                            })
-                          }}
-                          required
-                        />
-                      </div>
-
-                      <div id="security-code">
-                        <label>Security Code*</label>
-                        {clickShowError === true &&
-                          errorCheck.security_code === true && (
-                            <span className="card-error">
-                              <FontAwesomeIcon
-                                icon={faTriangleExclamation}
-                                style={{ marginRight: 5 }}
-                              />
-                              Please fill out this field
-                            </span>
-                          )}
-                        <InputMask
-                          type="tel"
-                          mask="9999"
-                          id="security-code"
-                          name="security_code"
-                          placeholder="3 or 4 digits"
-                          value={reservationInput.credit_card.security_code}
-                          onChange={(e) => {
-                            setReservationInput({
-                              ...reservationInput,
-                              credit_card: {
-                                ...reservationInput.credit_card,
-                                [e.target.name]: e.target.value,
-                              },
-                            })
-                          }}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div id="billing-address">
-                      <label>Billing Address*</label>
-                      <label id="label-checkbox">
-                        <input
-                          type="checkbox"
-                          id="checkbox"
-                          onClick={setSameAddress}
-                        />
-                        Same as profile address
-                      </label>
-
-                      {clickShowError === true &&
-                        errorCheck.billing_address === true && (
-                          <span className="card-error">
-                            <FontAwesomeIcon
-                              icon={faTriangleExclamation}
-                              style={{ marginRight: 5 }}
-                            />
-                            Please fill out this field
-                          </span>
-                        )}
-                      <div>
-                        <input
-                          type="text"
-                          id="billing_address"
-                          name="billing_address"
-                          style={{ marginTop: 0 }}
-                          value={reservationInput.credit_card.billing_address}
-                          onChange={(e) => {
-                            setReservationInput({
-                              ...reservationInput,
-                              credit_card: {
-                                ...reservationInput.credit_card,
-                                [e.target.name]: e.target.value,
-                              },
-                            })
-                          }}
-                        />
-                      </div>
+                    <div id="phone-number" style={{ marginTop: 0 }}>
+                      <label>Phone Number</label>
+                      <InputMask
+                        type="tel"
+                        mask="(999)-999-9999"
+                        id="phone-number"
+                        name="phone_number"
+                        placeholder="(___)-___-___"
+                        value={reservationInput.phone_number}
+                        onChange={onChangeHandler}
+                        required
+                      />
                     </div>
                   </div>
-                )}
-              </div>
-            )}
-
-            {guestInformation === true && (
-              <div id="guest-information">
-                <div className="two-rows" style={{ marginTop: 0 }}>
-                  <div id="full-name" style={{ marginTop: 0 }}>
-                    <label>Full Name</label>
-                    <input
-                      type="text"
-                      id="full-name"
-                      name="name"
-                      placeholder="Enter Full Name"
-                      value={reservationInput.name}
-                      onChange={onChangeHandler}
-                      required
-                    />
+                  <div className="two-rows">
+                    <div id="email-address">
+                      <label>Email Address</label>
+                      <input
+                        type="email"
+                        id="email-address"
+                        name="email"
+                        placeholder="Enter Email Address"
+                        value={reservationInput.email}
+                        onChange={onChangeHandler}
+                        required
+                      />
+                    </div>
                   </div>
-                  <div id="phone-number" style={{ marginTop: 0 }}>
-                    <label>Phone Number</label>
-                    <InputMask
-                      type="tel"
-                      mask="(999)-999-9999"
-                      id="phone-number"
-                      name="phone_number"
-                      placeholder="(___)-___-___"
-                      value={reservationInput.phone_number}
-                      onChange={onChangeHandler}
-                      required
-                    />
+                  <div className="cancel-submit">
+                    <button type="button" onClick={backButton}>
+                      Back
+                    </button>
+                    <button type="submit">Reserve Now</button>
                   </div>
                 </div>
-                <div className="two-rows">
-                  <div id="email-address">
-                    <label>Email Address</label>
-                    <input
-                      type="email"
-                      id="email-address"
-                      name="email"
-                      placeholder="Enter Email Address"
-                      value={reservationInput.email}
-                      onChange={onChangeHandler}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="cancel-submit">
-                  <button type="button" onClick={backButton}>
-                    Back
-                  </button>
-                  <button type="submit">Reserve Now</button>
-                </div>
-              </div>
-            )}
+              )}
 
-            <p id="total-booked">
-              <FontAwesomeIcon
-                icon={faArrowTrendUp}
-                style={{ marginRight: 5 }}
-              />{' '}
-              Booked {''}
-              {todayReservations.length} times today
-            </p>
-          </div>
-        </form>
+              <p id="total-booked">
+                <FontAwesomeIcon
+                  icon={faArrowTrendUp}
+                  style={{ marginRight: 5 }}
+                />{' '}
+                Booked {''}
+                {todayReservations.length} times today
+              </p>
+            </div>
+          </form>
+        </>
       )}
 
       {greeting === true && (
         <>
           {user ? (
             <>
-              <h1 className="greeting">
-                Thank you {reservationInput.name} for the reservation!
-              </h1>
-              <h1 className="greeting" style={{ fontSize: 30, marginTop: 20 }}>
-                Here is your preferred dinner:{' '}
-                {reservationInput.preferredDinner}
-              </h1>
+              <div className="background" style={{ backgroundColor: 'white' }}>
+                <h1 className="greeting" style={{ fontWeight: 'bolder' }}>
+                  Thank you {reservationInput.name} for the reservation !
+                </h1>
+                <h1
+                  className="greeting"
+                  style={{
+                    fontSize: 40,
+                    marginTop: 20,
+                    color: 'black',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  Reservation Information:
+                </h1>
+                <h1
+                  className="greeting"
+                  style={{
+                    fontSize: 30,
+                    marginTop: 20,
+                    color: 'black',
+                  }}
+                >
+                  Preferred dinner: {reservationInput.preferredDinner}
+                </h1>
+                <h1
+                  className="greeting"
+                  style={{
+                    fontSize: 30,
+                    marginTop: 20,
+                    color: 'black',
+                  }}
+                >
+                  Date: {reservationInput.date}
+                </h1>
+                <h1
+                  className="greeting"
+                  style={{
+                    fontSize: 30,
+                    marginTop: 20,
+                    color: 'black',
+                  }}
+                >
+                  Time: {reservationInput.time}
+                </h1>
+                <h1
+                  className="greeting"
+                  style={{
+                    fontSize: 30,
+                    marginTop: 20,
+                    color: 'black',
+                  }}
+                >
+                  Total guest: {reservationInput.total_guest}
+                </h1>
+              </div>
             </>
           ) : (
             <>
-              <h1 className="greeting">
-                Thank you {reservationInput.name} for the reservation!
-              </h1>
-              <h3 className="greeting" style={{ fontSize: 20 }}>
-                Looks like you are not our member, please join us{' '}
-                <Link to="/register" style={{ color: 'blue' }}>
-                  here
-                </Link>
-              </h3>
+              <div
+                className="background"
+                style={{ backgroundColor: 'white', height: '100%' }}
+              >
+                <h1 className="greeting">
+                  Thank you {reservationInput.name} for the reservation !
+                </h1>
+                <div className="greeting-information">
+                  <h1
+                    className="greeting"
+                    style={{
+                      fontSize: 40,
+                      marginTop: 20,
+                      color: 'black',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Reservation Information:
+                  </h1>
+                  <h1
+                    className="greeting"
+                    style={{
+                      fontSize: 30,
+                      marginTop: 20,
+                      color: 'black',
+                    }}
+                  >
+                    Date: {reservationInput.date}
+                  </h1>
+                  <h1
+                    className="greeting"
+                    style={{
+                      fontSize: 30,
+                      marginTop: 20,
+                      color: 'black',
+                    }}
+                  >
+                    Time: {reservationInput.time}
+                  </h1>
+                  <h1
+                    className="greeting"
+                    style={{
+                      fontSize: 30,
+                      marginTop: 20,
+                      color: 'black',
+                    }}
+                  >
+                    Total guest: {reservationInput.total_guest}
+                  </h1>
+                </div>
+              </div>
             </>
           )}
         </>

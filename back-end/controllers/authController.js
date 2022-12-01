@@ -51,6 +51,7 @@ exports.login = async (req, res, next) => {
       res.status(200).json({
         status: 'Success',
         data: {
+          preferred_payment: user.preferred_payment,
           isAdmin: user.isAdmin,
           token,
           userId: user._id,
@@ -78,6 +79,7 @@ exports.getCurrentUser = async (req, res, next) => {
       // user: { userId: '6322fd1c2844c13387749512' }
       const user = await User.findOne({ _id: req.user.userId })
       data.user = {
+        preferred_payment: user.preferred_payment,
         userId: user._id,
         userName: user.name,
         mailing_address: user.mailing_address,

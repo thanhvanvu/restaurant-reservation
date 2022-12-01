@@ -45,6 +45,12 @@ const userSchema = new mongoose.Schema(
       },
     },
 
+    preferred_payment: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+
     isAdmin: {
       type: Boolean,
       trim: true,

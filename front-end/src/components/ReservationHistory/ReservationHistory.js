@@ -4,6 +4,8 @@ import AdminReservationHistory from './ReservationHistoryItem'
 import axios from 'axios'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import AppContext from '../AppContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowTrendUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function ReservationHistory() {
   // useContext: to get the STATE, DISPATCH from AppContext
@@ -15,6 +17,8 @@ export default function ReservationHistory() {
   const [todayHistoryASC, setTodayHistoryASC] = useState([])
   const [todayHistoryDESC, setTodayHistoryDESC] = useState([])
   const [sort, setSort] = useState('1')
+
+  console.log(todayHistoryASC.length)
 
   // function to get all reservations
   const getAllReservations = useCallback(async () => {
@@ -85,7 +89,7 @@ export default function ReservationHistory() {
     )
     setTodayHistoryASC(sortedTodayHistoryASC)
 
-    console.log(sortedTodayHistoryASC)
+    // console.log(sortedTodayHistoryASC)
 
     const sortedTodayHistoryDESC = [...todayHistory].sort(
       (reservation1, reservation2) =>
@@ -94,7 +98,7 @@ export default function ReservationHistory() {
     )
     setTodayHistoryDESC(sortedTodayHistoryDESC)
 
-    console.log(sortedTodayHistoryDESC)
+    // console.log(sortedTodayHistoryDESC)
   }, [dateHistory.date]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const newResevertions = reservations.map((reservation) => {
@@ -213,6 +217,16 @@ export default function ReservationHistory() {
               <></>
             )}
           </table>
+          {user.isAdmin === true && (
+            <p id="total-booked" style={{ marginTop: 0 }}>
+              <FontAwesomeIcon
+                icon={faArrowTrendUp}
+                style={{ marginRight: 5 }}
+              />{' '}
+              Booked {''} {todayHistoryASC.length} {''}
+              times today
+            </p>
+          )}
         </div>
       </div>
     </div>

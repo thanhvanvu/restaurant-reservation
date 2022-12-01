@@ -83,4 +83,19 @@ export const holiday = [
     date: '12-25',
     greeting: 'Merry Christmas!',
   },
+  {
+    name: 'Christmas Eve',
+    date: '12-24',
+    greeting: 'Merry Christmas!',
+  },
+  {
+    name: 'Independence Day',
+    date: '07-04',
+    greeting: 'Happy Independence Day!',
+  },
+  {
+    name: 'New Year',
+    date: '01-01',
+    greeting: 'Happy New Year!',
+  },
 ]

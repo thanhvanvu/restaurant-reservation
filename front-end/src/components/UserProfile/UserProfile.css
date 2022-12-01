@@ -165,6 +165,55 @@
   width: 20%;
 }
 
+.payment-point {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.payment-point div label {
+  display: block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.payment-point div p {
+  display: inline-block;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
+.payment-point .earned-point {
+  margin-left: 200px;
+}
+
+.payment-point .preferred-payment select {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: poppins-medium;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 10px;
+  color: #494848;
+  background-color: #f0eef0;
+  outline: none;
+  width: 100%;
+}
+
 /* style user information */
 .profile-form #information div > p {
   margin-top: 10px;

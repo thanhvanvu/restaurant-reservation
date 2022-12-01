@@ -75,10 +75,10 @@ li {
 ul.inline-list li {
   display: inline;
 }
-
+/* 
 body {
   width: 1920px;
-}
+} */
 
 #top {
   background: #ece7f3 url('../public/image/background1/background1.png')
